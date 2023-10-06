@@ -6,6 +6,11 @@ public class Enemy : MonoBehaviour
 {
     //Enemy navigational logic
 
+    // Where the tower should aim 
+    [SerializeField] Transform hitTarget;
+
+
+
     //Assign a path to the enemy
 
     [SerializeField] EnemyPath path;
@@ -20,6 +25,11 @@ public class Enemy : MonoBehaviour
     {
         if(hasReachedEnd == false)
         {
+
+            //look into the direction of the next waypoint
+            transform.LookAt(path.GetWaypoint(currentTargetWaypoint));
+
+
             // move towards target waypoint 
             transform.position = Vector3.MoveTowards(transform.position,
                 path.GetWaypoint(currentTargetWaypoint).position,
@@ -48,4 +58,8 @@ public class Enemy : MonoBehaviour
         path = incomingPath;
     }
 
+    public Transform GetHitTarget()
+    {
+        return hitTarget;
+    }
 }
