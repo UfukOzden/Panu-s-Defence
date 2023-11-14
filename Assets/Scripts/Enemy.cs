@@ -6,6 +6,11 @@ public class Enemy : MonoBehaviour
 {
     //Enemy navigational logic
 
+    //Health
+    [SerializeField] float maxHealth = 20f;
+    float currentHealth;
+    [SerializeField] HealthBar healthBar;
+
     // Where the tower should aim 
     [SerializeField] Transform hitTarget;
 
@@ -20,6 +25,11 @@ public class Enemy : MonoBehaviour
 
     // Has the enemy reached the end of their road?
     bool hasReachedEnd = false;
+
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
 
     private void Update()
     {
@@ -52,6 +62,21 @@ public class Enemy : MonoBehaviour
         }      
         
     }
+
+    public void InflictDamage(float incomingDamage) 
+    {
+        currentHealth -= incomingDamage;
+
+        healthBar.UpdateHealthBar(currentHealth, maxHealth);
+
+        if(currentHealth <= 0) 
+        
+        {
+            Destroy(this.gameObject);
+        }
+
+    }
+
 
     public void SetPath(EnemyPath incomingPath)
     {

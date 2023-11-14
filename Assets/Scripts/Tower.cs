@@ -9,6 +9,13 @@ public class Tower : MonoBehaviour
     [SerializeField] Projectile projectile; //What to shoot
     [SerializeField] Transform firingPoint; // Where to shoot from
 
+    // Timers
+    [SerializeField] private float firingTimer;
+    [SerializeField] private float firingDelay = 1f;
+
+    private float scanningTimer;
+    private float scanningDelay = 0.1f;
+
     //Enemy bookkeeping
     [SerializeField] Enemy targetedEnemy;
     [SerializeField] LayerMask enemyLayer;
@@ -22,8 +29,34 @@ public class Tower : MonoBehaviour
 
     private void Update()
     {
-        ScanForEnemies(); //call the scanning method
-        Fire();            //call the fire method
+        scanningTimer += Time.deltaTime;
+        if (scanningTimer >= scanningDelay) 
+        {
+            ScanForEnemies(); //call the scanning method
+            scanningTimer = 0f; //reset the scanning timer
+
+        }
+
+
+
+        //Charge up the tower
+        if (firingTimer < firingDelay)
+        {
+            firingTimer += Time.deltaTime;
+        }
+
+        //Only fire if the tower's charged
+        //Only if there's something to shoot at
+        if (firingTimer >= firingDelay && targetedEnemy != null ) 
+        {
+            Fire();  //Call the fire method
+            firingTimer = 0f; //Reset the timer
+        }
+
+
+
+        
+       
     }
 
     private void ScanForEnemies() 
@@ -68,7 +101,7 @@ public class Tower : MonoBehaviour
         Vector3 enemyDirection = (targetedEnemy.GetHitTarget().position - firingPoint.position).normalized;
 
         // What, where, rotation, tell the projectile where to go
-        Instantiate(projectile, firingPoint.position, Quaternion.identity).Setup(enemyDirection);
+        Instantiate(projectile, firingPoint.position, Quaternion.identity).Setup(enemyDirection, targetedEnemy);
           
     }
 
