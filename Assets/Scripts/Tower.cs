@@ -9,6 +9,8 @@ public class Tower : MonoBehaviour
     [SerializeField] Projectile projectile; //What to shoot
     [SerializeField] Transform firingPoint; // Where to shoot from
 
+    private bool towerIsActive;
+
     // Timers
     [SerializeField] private float firingTimer;
     [SerializeField] private float firingDelay = 1f;
@@ -25,36 +27,39 @@ public class Tower : MonoBehaviour
     private void Awake()
     {
        enemiesInRange = new List<Enemy>();// Initialise the list
+        towerIsActive = false;
     }
 
     private void Update()
-    {
-        scanningTimer += Time.deltaTime;
-        if (scanningTimer >= scanningDelay) 
+    {   if (towerIsActive)
+
         {
-            ScanForEnemies(); //call the scanning method
-            scanningTimer = 0f; //reset the scanning timer
+            scanningTimer += Time.deltaTime;
+            if (scanningTimer >= scanningDelay)
+            {
+                ScanForEnemies(); //call the scanning method
+                scanningTimer = 0f; //reset the scanning timer
+
+            }
+
+
+
+            //Charge up the tower
+            if (firingTimer < firingDelay)
+            {
+                firingTimer += Time.deltaTime;
+            }
+
+            //Only fire if the tower's charged
+            //Only if there's something to shoot at
+            if (firingTimer >= firingDelay && targetedEnemy != null)
+            {
+                Fire();  //Call the fire method
+                firingTimer = 0f; //Reset the timer
+            }
+
 
         }
-
-
-
-        //Charge up the tower
-        if (firingTimer < firingDelay)
-        {
-            firingTimer += Time.deltaTime;
-        }
-
-        //Only fire if the tower's charged
-        //Only if there's something to shoot at
-        if (firingTimer >= firingDelay && targetedEnemy != null ) 
-        {
-            Fire();  //Call the fire method
-            firingTimer = 0f; //Reset the timer
-        }
-
-
-
         
        
     }
@@ -113,6 +118,9 @@ public class Tower : MonoBehaviour
     }
 
 
-
+    public void ActivateTower() 
+    {
+        towerIsActive = true;
+    }
 
 }
