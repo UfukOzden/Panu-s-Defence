@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] EventManager eventManager;
+    
+    
     //Enemy navigational logic
 
     //Health
@@ -72,6 +75,7 @@ public class Enemy : MonoBehaviour
         if(currentHealth <= 0) 
         
         {
+            eventManager.MakeMoney(50);
             Destroy(this.gameObject);
         }
 

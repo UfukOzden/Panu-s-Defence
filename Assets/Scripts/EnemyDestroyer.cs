@@ -4,14 +4,31 @@ using UnityEngine;
 
 public class EnemyDestroyer : MonoBehaviour
 {
-    
-        private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Something Touched Me");    
-        
-        Destroy(other.gameObject);
-    }
 
+    [SerializeField] EventManager EventManager;
+
+    [SerializeField] LayerMask enemyLayer;
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if ((enemyLayer.value & (1 << other.transform.gameObject.layer)) > 0) 
+      {
+
+            Debug.Log("You're Taking Damage!");
+
+            EventManager.ReduceLives();
+
+            Destroy(other.gameObject);
+
+
+
+
+      }
+
+
+    }
 
 }
 

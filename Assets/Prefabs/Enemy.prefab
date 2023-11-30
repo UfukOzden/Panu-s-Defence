@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71919601b1192940a41c9ae08ee6a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventManager: {fileID: 11400000, guid: 01bf71edf1c036b479ecee26734bc3e7, type: 2}
   maxHealth: 20
   healthBar: {fileID: 6372986894791561893}
   hitTarget: {fileID: 8947930815305605464}
