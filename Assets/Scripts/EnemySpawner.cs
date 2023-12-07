@@ -7,7 +7,9 @@ public class EnemySpawner : MonoBehaviour
     // This script spawns enemy waves
 
     // Enemy types to spawn 
-    [SerializeField] Enemy enemyBasic;
+    [SerializeField] Enemy enemyDefault;
+    [SerializeField] Enemy enemyHeavy;
+    [SerializeField] Enemy enemyFast;
 
     // Available paths
     //[SerializeField] EnemyPath path;
@@ -46,18 +48,52 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator Wave01()
     {
         //start 1t 0, count up to 10, step size is 1
-        for(int i = 0; i<wave01Enemies; i++)
-        {
+        //for(int i = 0; i<wave01Enemies; i++)
+        //{
 
 
-            SpawnEnemy(enemyBasic, paths[(int)Random.Range(0, paths.Count)]);
-            yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+        //    SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
+        //    yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
 
-        }
+        //} 
+
+        //to block comments hit CTRL + K, CTRL + C
+        //to unblock hit CTRL + K, CTRL U
+
+
+        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+
+        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+
+        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+
+        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(2f);
+
+        SpawnEnemy(enemyHeavy, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+
+        SpawnEnemy(enemyHeavy, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+
+        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(2f);
+
+        SpawnEnemy(enemyFast, paths[(int)Random.Range(0, paths.Count)]);
+        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
 
 
 
 
     }
+
+
+
+
+
+
 
 }

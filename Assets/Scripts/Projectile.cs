@@ -7,6 +7,12 @@ public class Projectile : MonoBehaviour
     //Settings
     [SerializeField] float projectileSpeed = 5.0f;
     [SerializeField] float damage = 10f;
+
+    [SerializeField] ParticleSystem particleFX;
+
+
+
+
     private Enemy targetedEnemy;
     private bool isActive;
     private Rigidbody rb;
@@ -57,6 +63,9 @@ public class Projectile : MonoBehaviour
 
         }
         
+       Instantiate(particleFX, transform.position, Quaternion.identity);
+
+
         Destroy(this.gameObject);
     }
 

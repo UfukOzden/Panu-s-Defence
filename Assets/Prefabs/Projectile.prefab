@@ -75,6 +75,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 15
+  damage: 10
+  particleFX: {fileID: 8209621325128594292, guid: c2def8845899cf64ea28f822eb4e2cc5, type: 3}
 --- !u!135 &693273438702319366
 SphereCollider:
   m_ObjectHideFlags: 0

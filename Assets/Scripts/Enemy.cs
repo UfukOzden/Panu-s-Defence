@@ -5,9 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EventManager eventManager;
-    
-    
+
+
     //Enemy navigational logic
+
+    [SerializeField] float speed = 5f;
 
     //Health
     [SerializeField] float maxHealth = 20f;
@@ -46,7 +48,7 @@ public class Enemy : MonoBehaviour
             // move towards target waypoint 
             transform.position = Vector3.MoveTowards(transform.position,
                 path.GetWaypoint(currentTargetWaypoint).position,
-                5.0f * Time.deltaTime);
+                speed * Time.deltaTime);
 
             // Close enough?
             if (Vector3.Distance(transform.position,
