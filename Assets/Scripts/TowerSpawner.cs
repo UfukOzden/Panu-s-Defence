@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TowerSpawner : MonoBehaviour
 
 {
+    [SerializeField] GameSettingsSO gameSettings;
+    
+    
+    
     //Towers
     
     
@@ -35,40 +37,46 @@ public class TowerSpawner : MonoBehaviour
 
     private void Update()
     {
-        //Activate the spawner if T is pressed and spawner is NOT active
-        if (Input.GetKeyDown(KeyCode.T) && !spawnerIsActive)
-
+        if (gameSettings.currentGameState == GameStates.inGame)
         {
-            StartTowerPlacement(defaultTower);
-        }
-        
-        
-        if (spawnerIsActive)
-
-        { 
-        mousePosition = GetMousePosition(); //update mouse position
-        towerMarker.transform.position = mousePosition; //move the indicator
 
 
+            //Activate the spawner if T is pressed and spawner is NOT active
+            if (Input.GetKeyDown(KeyCode.T) && !spawnerIsActive)
 
-        //Drop the tower
-        if(Input.GetMouseButton(0)) 
-            
-         {
-                towerMarker.ActivateTower();
-                towerMarker = null;
-                spawnerIsActive=false;
-            
-         }
-
-        //Cancel tower placement
-        else if(Input.GetMouseButton(1)) 
-            { 
-                Destroy(towerMarker.gameObject);
-                spawnerIsActive = false;
+            {
+                StartTowerPlacement(defaultTower);
             }
 
 
+            if (spawnerIsActive)
+
+            {
+                mousePosition = GetMousePosition(); //update mouse position
+                towerMarker.transform.position = mousePosition; //move the indicator
+
+
+
+                //Drop the tower
+                if (Input.GetMouseButton(0))
+
+                {
+                    towerMarker.ActivateTower();
+                    towerMarker = null;
+                    spawnerIsActive = false;
+
+                }
+
+                //Cancel tower placement
+                else if (Input.GetMouseButton(1))
+                {
+                    Destroy(towerMarker.gameObject);
+                    spawnerIsActive = false;
+                }
+
+
+
+            }
 
         }
     }

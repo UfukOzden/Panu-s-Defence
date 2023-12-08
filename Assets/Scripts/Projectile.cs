@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    [SerializeField] GameSettingsSO gameSettings;
+    
+    
     //Settings
     [SerializeField] float projectileSpeed = 5.0f;
     [SerializeField] float damage = 10f;
@@ -16,6 +19,9 @@ public class Projectile : MonoBehaviour
     private Enemy targetedEnemy;
     private bool isActive;
     private Rigidbody rb;
+
+    private Vector3 prevVelocity = Vector3.zero;
+    bool projectileIsPaused;
 
     private void Awake()
     {
@@ -38,13 +44,36 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
 
-        if (isActive)
+        if (gameSettings.currentGameState == GameStates.inGame && !projectileIsPaused)
+
         {
 
-            if (targetedEnemy != null)
+            if (isActive)
             {
-                transform.position = Vector3.MoveTowards(transform.position, targetedEnemy.transform.position, 20f * Time.deltaTime);
+
+                if (targetedEnemy != null)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, targetedEnemy.transform.position, 20f * Time.deltaTime);
+                }
             }
+            prevVelocity = rb.velocity;
+        }
+        
+        
+        
+        else if(gameSettings.currentGameState == GameStates.paused && !projectileIsPaused) 
+        {
+            rb.isKinematic = true;
+            projectileIsPaused = true;
+        }
+
+
+
+        else if (gameSettings.currentGameState == GameStates.inGame && projectileIsPaused) 
+        {
+            rb.isKinematic = false;
+            rb.velocity = prevVelocity;
+            projectileIsPaused = false;
         }
     }
 

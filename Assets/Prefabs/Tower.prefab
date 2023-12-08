@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8ea29b15629e644b41aca63deca5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings: {fileID: 11400000, guid: 13756df5871092c498f5692b20bf2382, type: 2}
   range: 10
   projectile: {fileID: -3699146429079639236, guid: 9c9a9527b5fcbed4493c49f2e85920e2, type: 3}
   firingPoint: {fileID: 5608886189682977736}

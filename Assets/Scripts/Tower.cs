@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    [SerializeField] GameSettingsSO gameSettings;
+
+
     //Settings
     [SerializeField] float range = 5.0f;
     [SerializeField] Projectile projectile; //What to shoot
@@ -31,7 +34,10 @@ public class Tower : MonoBehaviour
     }
 
     private void Update()
-    {   if (towerIsActive)
+    {
+        if (gameSettings.currentGameState == GameStates.inGame) { 
+
+        if (towerIsActive)
 
         {
             scanningTimer += Time.deltaTime;
@@ -60,8 +66,8 @@ public class Tower : MonoBehaviour
 
 
         }
-        
-       
+
+    }
     }
 
     private void ScanForEnemies() 
@@ -97,30 +103,36 @@ public class Tower : MonoBehaviour
 
     private void Fire()
     {
-        if(targetedEnemy == null)
-        {
-            return; // then stop here
+        
+        
+
+
+
+            if (targetedEnemy == null)
+            {
+                return; // then stop here
+            }
+
+            //Get enemy direction
+            Vector3 enemyDirection = (targetedEnemy.GetHitTarget().position - firingPoint.position).normalized;
+
+            // What, where, rotation, tell the projectile where to go
+            Instantiate(projectile, firingPoint.position, Quaternion.identity).Setup(enemyDirection, targetedEnemy);
+
         }
 
-        //Get enemy direction
-        Vector3 enemyDirection = (targetedEnemy.GetHitTarget().position - firingPoint.position).normalized;
-
-        // What, where, rotation, tell the projectile where to go
-        Instantiate(projectile, firingPoint.position, Quaternion.identity).Setup(enemyDirection, targetedEnemy);
-          
-    }
-
-    //Visualise the tower's range
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-    }
+        //Visualise the tower's range
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, range);
+        }
 
 
-    public void ActivateTower() 
-    {
-        towerIsActive = true;
-    }
+        public void ActivateTower()
+        {
+            towerIsActive = true;
+        }
 
+    
 }

@@ -9,6 +9,8 @@ public class HudManager : MonoBehaviour
     [SerializeField] TMP_Text livesTextObject;
     [SerializeField] TMP_Text moneyTextObject;
     [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject pauseScreen;
+    [SerializeField] GameObject victoryScreen;
 
     [SerializeField] EventManager eventManager;
     [SerializeField] GameSettingsSO gameSettings;
@@ -19,6 +21,12 @@ public class HudManager : MonoBehaviour
         eventManager.onLivesReduced += UpdateLivesText;
         eventManager.onGameOver += displayGameOverScreen;
         eventManager.onMakeMoney += UpdateMoneyText;
+
+        eventManager.onPauseGame += DisplayPauseScreen;
+        eventManager.onResumeGame += HidePauseScreen;
+
+
+        eventManager.onVictory += DisplayVictoryScreen;
     }
 
     private void OnDisable()
@@ -26,6 +34,12 @@ public class HudManager : MonoBehaviour
         eventManager.onLivesReduced -= UpdateLivesText;
         eventManager.onGameOver -= displayGameOverScreen;
         eventManager.onMakeMoney -= UpdateMoneyText;
+
+        eventManager.onPauseGame -= DisplayPauseScreen;
+        eventManager.onResumeGame -= HidePauseScreen;
+
+        eventManager.onVictory -= DisplayVictoryScreen;
+
     }
 
     
@@ -60,6 +74,17 @@ public class HudManager : MonoBehaviour
         gameOverScreen.SetActive(true);
     }
 
+    private void DisplayPauseScreen()
+    { pauseScreen.SetActive(true); }
 
+    private void HidePauseScreen() 
+    {
+        pauseScreen.SetActive(false);
+    }
+
+    private void DisplayVictoryScreen()
+    {
+        victoryScreen.SetActive(true);
+    }
 
 }

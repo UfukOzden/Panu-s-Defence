@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventManager: {fileID: 11400000, guid: 01bf71edf1c036b479ecee26734bc3e7, type: 2}
   lives: 3
-  money: 50
+  money: 800
+  currentGameState: 0

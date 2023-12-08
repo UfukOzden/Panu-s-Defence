@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventManager: {fileID: 11400000, guid: 01bf71edf1c036b479ecee26734bc3e7, type: 2}
+  gameSettings: {fileID: 11400000, guid: 13756df5871092c498f5692b20bf2382, type: 2}
   speed: 5
   maxHealth: 20
   healthBar: {fileID: 6372986894791561893}

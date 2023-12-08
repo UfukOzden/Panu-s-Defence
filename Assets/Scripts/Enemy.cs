@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EventManager eventManager;
-
+    [SerializeField] GameSettingsSO gameSettings;
 
     //Enemy navigational logic
 
@@ -38,34 +38,40 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if(hasReachedEnd == false)
+
+        if (gameSettings.currentGameState == GameStates.inGame)
         {
 
-            //look into the direction of the next waypoint
-            transform.LookAt(path.GetWaypoint(currentTargetWaypoint));
 
 
-            // move towards target waypoint 
-            transform.position = Vector3.MoveTowards(transform.position,
-                path.GetWaypoint(currentTargetWaypoint).position,
-                speed * Time.deltaTime);
-
-            // Close enough?
-            if (Vector3.Distance(transform.position,
-                path.GetWaypoint(currentTargetWaypoint).position) < 0.2f)
-
+            if (hasReachedEnd == false)
             {
-                //Increment target waypoint
-                currentTargetWaypoint = currentTargetWaypoint + 1;
 
-                // Did we arrive at the last waypoint?
-                if (currentTargetWaypoint >= path.GetTotalNumberOfWaypoints())
+                //look into the direction of the next waypoint
+                transform.LookAt(path.GetWaypoint(currentTargetWaypoint));
+
+
+                // move towards target waypoint 
+                transform.position = Vector3.MoveTowards(transform.position,
+                    path.GetWaypoint(currentTargetWaypoint).position,
+                    speed * Time.deltaTime);
+
+                // Close enough?
+                if (Vector3.Distance(transform.position,
+                    path.GetWaypoint(currentTargetWaypoint).position) < 0.2f)
+
                 {
-                    hasReachedEnd = true;
+                    //Increment target waypoint
+                    currentTargetWaypoint = currentTargetWaypoint + 1;
+
+                    // Did we arrive at the last waypoint?
+                    if (currentTargetWaypoint >= path.GetTotalNumberOfWaypoints())
+                    {
+                        hasReachedEnd = true;
+                    }
                 }
             }
-        }      
-        
+        }
     }
 
     public void InflictDamage(float incomingDamage) 

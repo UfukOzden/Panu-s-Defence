@@ -5,11 +5,10 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     // This script spawns enemy waves
+    [SerializeField] EventManager eventManager;
+    
+    [SerializeField] List<WaveSO> waves;
 
-    // Enemy types to spawn 
-    [SerializeField] Enemy enemyDefault;
-    [SerializeField] Enemy enemyHeavy;
-    [SerializeField] Enemy enemyFast;
 
     // Available paths
     //[SerializeField] EnemyPath path;
@@ -32,11 +31,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        // Begin the spawner timer
-        StartCoroutine(Wave01());
-    }
-    
+       
 
+        StartCoroutine(ReleaseAllWAves());
+    }
+
+    IEnumerator ReleaseAllWAves() 
+    {
+        foreach(WaveSO wave in waves) 
+        {
+            yield return new WaitForSeconds(5f);
+            yield return StartCoroutine(ReleaseWave(wave));
+        }
+
+        yield return new WaitForSeconds(5f);
+        eventManager.Triggervictory();
+    }
+
+    
+    IEnumerator ReleaseWave(WaveSO waveToSpawn) 
+    {
+        foreach(Enemy enemy in waveToSpawn.Enemies)
+        
+        {
+            SpawnEnemy(enemy, paths[(int)Random.Range(0, paths.Count)]);
+            yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
+        }
+    }
 
 
     private void SpawnEnemy(Enemy enemyToSpawn, EnemyPath chosenPath)
@@ -45,8 +66,8 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(enemyToSpawn, transform.position, Quaternion.identity).SetPath(chosenPath);
     }
 
-    IEnumerator Wave01()
-    {
+  //  IEnumerator Wave01()
+  //  {
         //start 1t 0, count up to 10, step size is 1
         //for(int i = 0; i<wave01Enemies; i++)
         //{
@@ -61,34 +82,10 @@ public class EnemySpawner : MonoBehaviour
         //to unblock hit CTRL + K, CTRL U
 
 
-        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
-
-        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
-
-        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
-
-        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(2f);
-
-        SpawnEnemy(enemyHeavy, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
-
-        SpawnEnemy(enemyHeavy, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
-
-        SpawnEnemy(enemyDefault, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(2f);
-
-        SpawnEnemy(enemyFast, paths[(int)Random.Range(0, paths.Count)]);
-        yield return new WaitForSeconds(Random.Range(randomDelayMin, randomDelayMax));
 
 
 
-
-    }
+  //  }
 
 
 
